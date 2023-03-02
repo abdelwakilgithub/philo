@@ -1,0 +1,36 @@
+eat		sleep	think
+die
+
+t_think = ~
+
+philo	eat	->	sleep	->	think	-> eat
+
+philo die	<=>	t_eat_(n + 1) - t_eat_(n) > t_die 
+			<=> t_eat_(n) + t_sleep_(n) + t_think(n) > t_die
+philo 2 eat	<=>	hold fork (1 & 2)
+philo think	<=> don't eat/sleep
+
+arg true <=>
+(t_die > t_eat_1 + t_sleep + ~)
+
+number_of_philosophers
+time_to_die
+time_to_eat
+time_to_sleep
+[number_of_times_each_philosopher_must_eat]
+
+simulation stop <=> all philos eat nb_must_eat || all philos dies
+
+state change of philo	<=>	timestamp_in_ms X is ....
+died philo displayed no more than 10 ms after the actual death
+philosophers should avoid dying
+
+6 0 6 1
+6 2 1 3
+n + 1 % n
+((n - 1) + i % n)
+
+rest_time_die = time_die - time_pass
+p1 current_time - time_last_meal = time_pass
+p2 time_eat - current_time - time_last_meal = rest_time_eat
+rest_time_die - rest_time_eat < 0
