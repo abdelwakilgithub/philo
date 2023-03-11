@@ -30,7 +30,29 @@ philosophers should avoid dying
 n + 1 % n
 ((n - 1) + i % n)
 
-rest_time_die = time_die - time_pass
-p1 current_time - time_last_meal = time_pass
-p2 time_eat - current_time - time_last_meal = rest_time_eat
+eat 200 -> sleep  200 -> think ?
+0
+
+p1
+	time_pass		=	current_time - time_last_meal
+	rest_time_die	=	time_die - time_pass
+p2
+	rest_time_eat	=	time_eat - current_time - time_last_meal
+	
+
 rest_time_die - rest_time_eat < 0
+
+time time_start
+
+// 20000 10000 5000 2500 1250 625 313 106  
+
+// philo
+// while (1)
+// {
+// 	i = 0;
+// 	while (i < l3adadd dual lphilos )
+// 	{
+// 		if (time dual daba - akhir mera kla fih lphoilo[i] > time to ddie)
+// 		i++;
+// 	}
+// }
