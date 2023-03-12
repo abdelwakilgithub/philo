@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moabdelo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/12 23:49:05 by moabdelo          #+#    #+#             */
+/*   Updated: 2023/03/12 23:49:07 by moabdelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 long	fn_current_time(void)
@@ -28,6 +40,7 @@ int	fn_nb_philo_eat(t_philo *ph)
 		pthread_mutex_unlock(&(ph->meal[i]));
 		i++;
 	}
+	pthread_mutex_lock(ph->mutex_print);
 	return (1);
 }
 
@@ -37,7 +50,7 @@ void	fn_philo_die(t_philo *ph, int i)
 	{
 		pthread_mutex_lock(ph->mutex_print);
 		printf("\033[0;37m%ld %d died\n",
-			fn_current_time() - ph->start_simulation[0], i);
+			fn_current_time() - ph->start_simulation[0], i + 1);
 		exit(0);
 	}
 }
@@ -52,9 +65,13 @@ void	fn_usleep(long start, long time)
 	}
 }
 
-void	fn_printf(char *str, long current_time, int i, t_philo *ph)
+long	fn_printf(char *str, int i, t_philo *ph)
 {
+	long	current_time;
+
 	pthread_mutex_lock(ph->mutex_print);
-	printf(str, current_time - ph->start_simulation[0], i);
+	current_time = fn_current_time();
+	printf(str, current_time - ph->start_simulation[0], i + 1);
 	pthread_mutex_unlock(ph->mutex_print);
+	return (current_time);
 }
