@@ -5,7 +5,7 @@ CC = cc -pthread -fsanitize=thread
 CFLAGS = -Wall -Werror -Wextra
 
 SRC = main.c\
-	philo.c\
+	utils.c\
 	ft_atoi.c\
 	ft_calloc.c\
 

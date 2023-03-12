@@ -1,58 +1,43 @@
-eat		sleep	think
-die
+// eat		sleep	think
+// die
 
-t_think = ~
+// t_think = ~
 
-philo	eat	->	sleep	->	think	-> eat
+// philo	eat	->	sleep	->	think	-> eat
 
-philo die	<=>	t_eat_(n + 1) - t_eat_(n) > t_die 
-			<=> t_eat_(n) + t_sleep_(n) + t_think(n) > t_die
-philo 2 eat	<=>	hold fork (1 & 2)
-philo think	<=> don't eat/sleep
+// philo die	<=>	t_eat_(n + 1) - t_eat_(n) > t_die 
+// 			<=> t_eat_(n) + t_sleep_(n) + t_think(n) > t_die
+// philo 2 eat	<=>	hold fork (1 & 2)
+// philo think	<=> don't eat/sleep
 
-arg true <=>
-(t_die > t_eat_1 + t_sleep + ~)
+// arg true <=>
+// (t_die > t_eat_1 + t_sleep + ~)
 
-number_of_philosophers
-time_to_die
-time_to_eat
-time_to_sleep
-[number_of_times_each_philosopher_must_eat]
+// number_of_philosophers
+// time_to_die
+// time_to_eat
+// time_to_sleep
+// [number_of_times_each_philosopher_must_eat]
 
-simulation stop <=> all philos eat nb_must_eat || all philos dies
+// simulation stop <=> all philos eat nb_must_eat || all philos dies
 
-state change of philo	<=>	timestamp_in_ms X is ....
-died philo displayed no more than 10 ms after the actual death
-philosophers should avoid dying
+// state change of philo	<=>	timestamp_in_ms X is ....
+// died philo displayed no more than 10 ms after the actual death
+// philosophers should avoid dying
 
-6 0 6 1
-6 2 1 3
-n + 1 % n
-((n - 1) + i % n)
+// 6 0 6 1
+// 6 2 1 3
+// n + 1 % n
+// ((n - 1) + i % n)
 
-eat 200 -> sleep  200 -> think ?
-0
+// eat 200 -> sleep  200 -> think ?
+// 0
 
-p1
-	time_pass		=	current_time - time_last_meal
-	rest_time_die	=	time_die - time_pass
-p2
-	rest_time_eat	=	time_eat - current_time - time_last_meal
+// p1
+// 	time_pass		=	current_time - time_last_meal
+// 	rest_time_die	=	time_die - time_pass
+// p2
+// 	rest_time_eat	=	time_eat - current_time - time_last_meal
 	
 
-rest_time_die - rest_time_eat < 0
-
-time time_start
-
-// 20000 10000 5000 2500 1250 625 313 106  
-
-// philo
-// while (1)
-// {
-// 	i = 0;
-// 	while (i < l3adadd dual lphilos )
-// 	{
-// 		if (time dual daba - akhir mera kla fih lphoilo[i] > time to ddie)
-// 		i++;
-// 	}
-// }
+// rest_time_die - rest_time_eat < 0
