@@ -55,19 +55,23 @@ void	*fn_philo_die(void *philo)
 	while (1)
 	{
 		sem_wait(ph->tl_meal[ph->i]);
-		// sem_wait(ph->sem_print);
+		if (ph->nb_must_eat && ph->nb_meal[ph->i] >= ph->nb_must_eat)
+		{
+			sem_post(ph->tl_meal[ph->i]);
+			sem_post(ph->forks);
+			sem_post(ph->forks);
+			exit(0);
+		}
 		if (fn_current_time() - ph->time_last_meal[ph->i] >= ph->time_to_die)
 		{
 			sem_post(ph->tl_meal[ph->i]);
 			sem_wait(ph->sem_print);
 			printf("\033[0;37m%ld %d died\n",
 				fn_current_time() - ph->start_simulation[0], ph->i + 1);
-			exit(0);
+			exit(1);
 		}
-		// sem_post(ph->sem_print);
 		sem_post(ph->tl_meal[ph->i]);
-		// printf("--%d--\n", ph->i);
-		// fn_usleep(fn_current_time(),10);
+		fn_usleep(fn_current_time(),10);
 	}
 	return (0);
 }

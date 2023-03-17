@@ -33,6 +33,22 @@ void	*fn_stat_ph2(void *philo)
 	return (NULL);
 }
 
+void	fn_waitpids(t_philo *ph, int i)
+{
+	int	status;
+
+	while (i < ph->nb_philo)
+	{
+		waitpid(-1, &status, 0);
+		if (status / 256 != 0)
+			break ;
+		i++;
+	}
+	i = 0;
+	while (i < ph->nb_philo)
+		kill(ph->pid[i++], SIGTERM);
+}
+
 int	fn_creat_thread_cal(t_philo *ph)
 {
 	t_philo		*ph_cpy;
@@ -49,12 +65,8 @@ int	fn_creat_thread_cal(t_philo *ph)
 			if (pthread_create(&ph_cpy->thread1[ph_cpy->i],
 					NULL, &fn_philo_die, ph_cpy) != 0)
 				return (ph_cpy->i);
-			if (pthread_create(&ph_cpy->thread2[ph_cpy->i],
-					NULL, &fn_stat_ph2, ph_cpy) != 0)
-				return (ph_cpy->i);
-			// fn_stat_ph2(ph_cpy);
+			fn_stat_ph2(ph_cpy);
 			pthread_join(ph_cpy->thread1[ph_cpy->i], NULL);
-			pthread_join(ph_cpy->thread2[ph_cpy->i], NULL);
 		}
 		ph->i = ph->i + 1;
 	}
@@ -67,7 +79,6 @@ void	fn_init_sem(t_philo *ph)
 	char	*str;
 
 	ph->key = sem_open("/key", O_CREAT, 0644, 1);
-	// ph->key_child = sem_open("/key", O_CREAT, 0644, ph->nb_philo);÷
 	ph->sem_print = sem_open("/sem_print", O_CREAT, 0644, 1);
 	ph->forks = sem_open("/forks", O_CREAT, 0644, ph->nb_philo);
 	i = 0;
@@ -142,12 +153,7 @@ int	fn_creat_thread(int ac, char **av)
 	sem_post(ph->key);
 	if (nb_return)
 		return (nb_return);
-	i = 0;
-	usleep(100 * 1000);
-	while (i < ph->nb_philo)
-	{
-		waitpid(ph->pid[i++], NULL, 0);
-	}
+	fn_waitpids(ph, 0);
 	fn_close_sem(ph);
 	return (0);
 }

@@ -34,7 +34,6 @@
 long	fn_ph_eat(t_philo *ph)
 {
 	long		current_time;
-	// long		v;
 
 	sem_wait(ph->forks);
 	fn_printf("\033[0;32m%ld %d has taken a fork\n", ph->i, ph);
@@ -42,10 +41,8 @@ long	fn_ph_eat(t_philo *ph)
 	fn_printf("\033[0;32m%ld %d has taken a fork\n", ph->i, ph);
 	current_time = fn_printf("%ld %d is eating\n", ph->i, ph);
 	sem_wait(ph->tl_meal[ph->i]);
-	// sem_wait(ph->sem_print);
 	ph->time_last_meal[ph->i] = current_time;
-	// v = ph->time_last_meal[ph->i];
-	// sem_post(ph->sem_print);
+	ph->nb_meal[ph->i] = ph->nb_meal[ph->i] + 1;
 	sem_post(ph->tl_meal[ph->i]);
 	// sem_wait(ph->meal[ph->i]);
 	// ph->nb_meal[ph->i] = ph->nb_meal[ph->i] + 1;
