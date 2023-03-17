@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 t_philo	*fn_init_philo(int ac, char **av, int i)
 {
@@ -19,16 +19,11 @@ t_philo	*fn_init_philo(int ac, char **av, int i)
 	ph = malloc(sizeof(t_philo));
 	ph->nb_philo = ft_atoi(av[1]);
 	ph->pid = (pid_t *)malloc(ph->nb_philo * sizeof(pid_t));
-	ph->key = (sem_t *)malloc(sizeof(sem_t));
-	ph->forks = malloc(sizeof(sem_t));
+	// ph->key = (sem_t *)malloc(sizeof(sem_t));
+	// ph->forks = malloc(sizeof(sem_t));
 	ph->tl_meal = malloc(ph->nb_philo * sizeof(sem_t *));
-	ph->meal = malloc(ph->nb_philo * sizeof(sem_t *));
-	ph->thread1 = (pthread_t *)malloc(ph->nb_philo * sizeof(pthread_t));
-	ph->thread2 = (pthread_t *)malloc(ph->nb_philo * sizeof(pthread_t));
-	// i = 0;
-	// while (i < ph->nb_philo)
-	// 	ph->thread[i] = (pthread_t *)malloc(2 * sizeof(pthread_t));
-	ph->sem_print = (sem_t *)malloc(sizeof(sem_t));
+	ph->thread = (pthread_t *)malloc(ph->nb_philo * sizeof(pthread_t));
+	// ph->sem_print = (sem_t *)malloc(sizeof(sem_t));
 	ph->time_last_meal = (long *)malloc(ph->nb_philo * sizeof(long));
 	ph->time_to_die = ft_atoi(av[2]);
 	ph->time_to_eat = ft_atoi(av[3]);
@@ -42,4 +37,54 @@ t_philo	*fn_init_philo(int ac, char **av, int i)
 	while (i < ph->nb_philo)
 		ph->time_last_meal[i++] = ph->start_simulation[0];
 	return (ph);
+}
+
+sem_t	*fn_sem_open(const char *str, int nb)
+{
+	sem_t	*sem;
+
+	sem = sem_open(str, O_CREAT, 0644, nb);
+	if (sem == SEM_FAILED)
+		exit(1);
+	return (sem);
+}
+
+void	fn_init_sem(t_philo *ph)
+{
+	int		i;
+	char	*str;
+
+	ph->key = fn_sem_open("/key", 1);
+	ph->sem_print = fn_sem_open("/sem_print", 1);
+	ph->forks = fn_sem_open("/forks", ph->nb_philo);
+	i = 0;
+	while (i < ph->nb_philo)
+	{
+		str = ft_strjoin("/tl_meal", ft_itoa(i));
+		ph->tl_meal[i++] = fn_sem_open(str, 0);
+		free(str);
+	}
+}
+
+void	fn_close_sem(t_philo *ph)
+{
+	int		i;
+	char	*str;
+
+	sem_close(ph->key);
+	sem_close(ph->sem_print);
+	sem_close(ph->forks);
+	i = 0;
+	while (i < ph->nb_philo)
+		sem_close(ph->tl_meal[i++]);
+	i = 0;
+	while (i < ph->nb_philo)
+	{
+		str = ft_strjoin("/tl_meal", ft_itoa(i++));
+		sem_unlink(str);
+		free(str);
+	}
+	sem_unlink("/key");
+	sem_unlink("/sem_print");
+	sem_unlink("/forks");
 }

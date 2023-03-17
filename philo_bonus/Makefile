@@ -1,18 +1,18 @@
-NAME = philo
+NAME = philo_bonus
 
 CC = cc -pthread 
 # -fsanitize=thread
 
 CFLAGS = -Wall -Werror -Wextra
 
-SRC = main.c\
-	stat_philo.c\
-	init_philo.c\
-	utils.c\
-	ft_atoi.c\
-	ft_calloc.c\
-	ft_strjoin.c\
-	ft_itoa.c\
+SRC = main_bonus.c\
+	stat_philo_bonus.c\
+	init_philo_bonus.c\
+	utils_bonus.c\
+	ft_atoi_bonus.c\
+	ft_calloc_bonus.c\
+	ft_strjoin_bonus.c\
+	ft_itoa_bonus.c\
 
 OBJ = ${SRC:.c=.o}
 

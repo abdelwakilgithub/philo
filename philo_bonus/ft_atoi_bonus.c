@@ -9,7 +9,7 @@
 /*   Updated: 2022/10/26 13:00:25 by moabdelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_atoi(const char *str)
 {

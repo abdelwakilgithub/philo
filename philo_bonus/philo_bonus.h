@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>
 # include <stdio.h>
@@ -26,16 +26,11 @@ typedef struct s_philo
 {
 	int				i;
 	int				nb_philo;
-	int				i_left;
-	int				i_right;
-	pthread_t		*thread1;
-	pthread_t		*thread2;
+	pthread_t		*thread;
 	pid_t			*pid;
 	sem_t			*key;
-	sem_t			*key_child;
 	sem_t			*forks;
 	sem_t			*sem_print;
-	sem_t			**meal;
 	sem_t			**tl_meal;
 	long			*time_last_meal;
 	long			time_to_die;
@@ -51,15 +46,13 @@ char	*ft_strjoin(char const *s1, char *s2);
 char	*ft_itoa(int n);
 void	*ft_calloc(size_t count, size_t size);
 long	fn_current_time(void);
-int		fn_nb_philo_eat(t_philo *ph);
 void	*fn_philo_die(void *ph);
 void	fn_usleep(long start, long time);
 long	fn_printf(char *str, int i, t_philo *ph);
 t_philo	*fn_init_philo(int ac, char **av, int i);
-void	fn_start_thread_init(t_philo *ph);
-void	fn_start_thread(t_philo *ph, int i);
-void	fn_ph_can_eat(t_philo *ph, int j);
 long	fn_ph_eat(t_philo *ph);
 void	*fn_stat_ph(void *philo);
+void	fn_init_sem(t_philo *ph);
+void	fn_close_sem(t_philo *ph);
 
 #endif

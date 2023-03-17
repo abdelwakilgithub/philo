@@ -1,29 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moabdelo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 14:01:34 by moabdelo          #+#    #+#             */
-/*   Updated: 2022/10/25 14:02:36 by moabdelo         ###   ########.fr       */
+/*   Created: 2022/10/26 13:02:54 by moabdelo          #+#    #+#             */
+/*   Updated: 2022/10/26 13:03:03 by moabdelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-void	*ft_calloc(size_t count, size_t size)
+static int	len_str(const char *str)
 {
-	size_t	i;
-	char	*value;
+	int	i;
 
 	i = 0;
-	if (count * size >= SIZE_MAX)
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char const *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*result;
+
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
 		return (0);
-	value = (char *)malloc(count * size);
-	if (!value)
+	result = (char *)malloc((len_str(s1) + len_str(s2)) * sizeof(char) + 1);
+	if (!result)
 		return (0);
-	while (i < (count * size))
-		value[i++] = 0;
-	return (value);
+	while (s1[j])
+		result[i++] = s1[j++];
+	j = 0;
+	while (s2[j])
+		result[i++] = s2[j++];
+	result[i] = '\0';
+	free(s2);
+	return (result);
 }
