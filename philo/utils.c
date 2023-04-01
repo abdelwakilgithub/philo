@@ -17,10 +17,8 @@ long	fn_current_time(void)
 	struct timeval	tv;
 	long			current_time;
 
-	if (gettimeofday(&tv, NULL) == -1)
-		exit(1);
-	else
-		current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	gettimeofday(&tv, NULL);
+	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (current_time);
 }
 
@@ -51,7 +49,9 @@ void	fn_philo_die(t_philo *ph, int i)
 		pthread_mutex_lock(ph->mutex_print);
 		printf("\033[0;37m%ld %d died\n",
 			fn_current_time() - ph->start_simulation[0], i + 1);
-		exit(0);
+		pthread_mutex_lock(&(ph->meal[ph->i]));
+		ph->nb_meal[ph->i] = -1;
+		pthread_mutex_unlock(&(ph->meal[ph->i]));
 	}
 }
 

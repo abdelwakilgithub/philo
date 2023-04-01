@@ -56,5 +56,6 @@ void	fn_start_thread(t_philo *ph, int i);
 void	fn_ph_can_eat(t_philo *ph, int j);
 long	fn_ph_eat(t_philo *ph, int i_left, int i_right);
 void	*fn_stat_ph(void *philo);
+int		fn_end_simulation(t_philo *ph);
 
 #endif

@@ -12,6 +12,27 @@
 
 #include "philo.h"
 
+int	fn_end_simulation(t_philo *ph)
+{
+	int	i;
+
+	if (ph->nb_must_eat && fn_nb_philo_eat(ph))
+		return (1);
+	i = 0;
+	while (i < ph->nb_philo)
+	{
+		pthread_mutex_lock(&(ph->meal[i]));
+		if (ph->nb_meal[i] < 0)
+		{
+			pthread_mutex_unlock(&(ph->meal[i]));
+			return (1);
+		}
+		pthread_mutex_unlock(&(ph->meal[i]));
+		i++;
+	}
+	return (0);
+}
+
 void	fn_ph_can_eat(t_philo *ph, int j)
 {
 	long		rest_time_die;
@@ -76,10 +97,11 @@ void	*fn_stat_ph(void *philo)
 	while (1)
 	{
 		current_time = fn_ph_eat(ph, ph->i_left, ph->i_right);
+		if (ph->time_to_sleep > ph->time_to_die - ph->time_to_eat)
+			(fn_usleep(fn_current_time(), ph->time_to_die - ph->time_to_eat),
+				fn_philo_die(ph, ph->i));
 		fn_usleep(current_time + ph->time_to_eat, ph->time_to_sleep);
 		fn_printf("\033[0;34m%ld %d is thinking\n", ph->i, ph);
-		fn_philo_die(ph, ph->i);
 	}
-	free(ph);
-	return (NULL);
+	return (free(ph), NULL);
 }

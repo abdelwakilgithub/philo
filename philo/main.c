@@ -82,12 +82,8 @@ int	fn_creat_thread(int ac, char **av)
 	if (nb_return)
 		return (nb_return);
 	while (1)
-		if (ph->nb_must_eat && fn_nb_philo_eat(ph))
-			exit(0);
-	ph->i = 0;
-	while (ph->i < ph->nb_philo)
-		if (pthread_join(ph->thread[ph->i++], NULL) != 0)
-			return (ph->i);
+		if (fn_end_simulation(ph))
+			break ;
 	fn_destroy_mutex(ph);
 	return (0);
 }
